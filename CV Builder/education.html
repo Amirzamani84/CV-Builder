@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Search Dropdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="education.css">
+  <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    #search-results, #search-results2 {
+      position: absolute;
+      width: 300px;
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      z-index: 1000;
+    }
+
+    #search-results div, #search-results2 div {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    #search-results div:hover, #search-results2 div:hover {
+      background: #f0f0f0;
+    }
+
+    #search-input:focus + #search-results{
+      border: 1px solid #ccc;
+    }
+    #search-input2:focus + #search-results2{
+      border: 1px solid #ccc;
+    }
+
+    #search-container, #search-container2, 
+    #university-con, #degree {
+      position: relative;
+      width: 300px;
+      margin-bottom: 15px;
+    }
+
+    .year {
+      position: relative;
+      display: inline-block;
+    }
+
+    input[type="text"], select{
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 35px;
+      height: 20px;
+      margin-left: 5px;
+      margin-top: 2px;
+      vertical-align: middle;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 19px;
+      width: 19px;
+      left: 0.6px;
+      bottom: 0.3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(14.5px);
+    }
+
+    .toggle-label {
+      font-weight: bold;
+      vertical-align: middle;
+    }
+
+    .d-inline-block {
+      display: inline-block;
+    }
+
+    .d-none {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <fieldset>
+    <h2>Educations</h2>
+    <div id="search-container">
+      <label for="university">School/University</label>
+      <input type="text" id="search-input" placeholder="Search by name or domain" autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+
+    <div id="university-con">
+      <label for="university-type">University Type</label>
+      <br>
+      <select name="university-type" id="university-type">
+        <option value="default">University Type</option>
+        <option value="governmental">Governmental</option>
+        <option value="private">Private</option>
+        <option value="azad">Azad</option>
+        <option value="pnu">PNU</option>
+        <option value="elmi karbordi">Elmi Karbordi</option>
+        <option value="fani herfei">Fani Herfei</option>
+        <option value="pardis-international">Pardis International</option>
+        <option value="non-iranian">Non-Iranian</option>
+        <option value="other">Other</option>
+        <option value=""></option>
+      </select>
+    </div>
+
+    <div id="search-container2">
+      <label for="majors">Major</label>
+      <input type="text" id="search-input2" placeholder="Search by name" autocomplete="off">
+      <div id="search-results2"></div>
+    </div>
+
+    <div id="degree">
+      <label for="degree-level">Degree Level</label>
+      <select name="degree-level" id="degree-level">
+        <option value="default">Degree Level</option>
+        <option value="phd">PhD</option>
+        <option value="md">MD</option>
+        <option value="master">Master (MSc/MA)</option>
+        <option value="bachelor">Bachelor (BSc/BA)</option>
+        <option value="associate">Associate</option>
+        <option value="diploma">Diploma</option>
+        <option value="below-diploma">Below Diploma</option>
+      </select>
+    </div>
+
+    <div id="start" class="year">
+      <label for="start-year">Start Year</label>
+      <br>
+      <select name="start-year" id="start-year"></select>
+    </div>
+
+    <div id="end" class="year">
+      <label for="end-year">End Year</label>
+      <br>
+      <select name="end-year" id="end-year"></select>
+    </div>
+
+    <p id="year-text" class="d-inline-block d-none">Till Present</p>
+    <label for="toggleSwitch">I currently study here</label>
+    <label class="switch">
+      <input type="checkbox" id="toggleSwitch">
+      <span class="slider"></span>
+    </label>
+    <br>
+
+    <label for="description">Description (optional)</label>
+    <br>
+    <textarea id="description" rows="5" cols="55" placeholder="Write here..." autocomplete="off"></textarea>
+
+    <script>
+      const toggleSwitch = document.getElementById('toggleSwitch');
+      const yearText = document.getElementById('year-text');
+      const end = document.getElementById('end');
+
+      toggleSwitch.addEventListener('change', function() {
+        if (!this.checked) {
+          yearText.classList.add('d-none');
+          end.classList.remove('d-none');
+        } else {
+          yearText.classList.remove('d-none');
+          end.classList.add('d-none');
+        }
+      });
+    </script>
+
+    <script>
+      fetch('start.json')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error in uploading JSON');
+          }
+          return response.json();
+        })
+        .then(years => {
+          const selectStart = document.getElementById('start-year');
+          const selectEnd = document.getElementById('end-year');
+          years.forEach(year => {
+            const optionStart = document.createElement('option');
+            optionStart.value = year;
+            optionStart.textContent = year;
+            selectStart.appendChild(optionStart);
+
+            const optionEnd = document.createElement('option');
+            optionEnd.value = year;
+            optionEnd.textContent = year;
+            selectEnd.appendChild(optionEnd);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    </script>
+  </fieldset>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const [uniResponse, majorsResponse] = await Promise.all([
+          fetch('world_universities_and_domains.json'),
+          fetch('majors.json')
+        ]);
+
+        if (!uniResponse.ok) throw new Error('Failed to load universities data');
+        if (!majorsResponse.ok) throw new Error('Failed to load majors data');
+
+        const [universities, majors] = await Promise.all([
+          uniResponse.json(),
+          majorsResponse.json()
+        ]);
+
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const searchInput2 = document.getElementById('search-input2');
+        const searchResults2 = document.getElementById('search-results2');
+
+        function displayResults(matches, container, input) {
+          container.innerHTML = '';
+          if (matches.length === 0) {
+            const noResultDiv = document.createElement('div');
+            noResultDiv.textContent = 'No results found';
+            container.appendChild(noResultDiv);
+            return;
+          }
+          matches.forEach(item => {
+            const resultDiv = document.createElement('div');
+            resultDiv.textContent = typeof item === 'object' 
+              ? `${item.name} - ${item.domains.join(', ')}`
+              : item;
+            resultDiv.addEventListener('click', () => {
+              input.value = typeof item === 'object' ? item.name : item;
+              container.innerHTML = '';
+            });
+            container.appendChild(resultDiv);
+          });
+        }
+
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase();
+          const matches = universities.filter(item =>
+            item.name.toLowerCase().includes(query) ||
+            item.domains.some(domain => domain.toLowerCase().includes(query))
+          );
+          displayResults(matches, searchResults, searchInput);
+        });
+
+        searchInput2.addEventListener('input', () => {
+          const query = searchInput2.value.toLowerCase();
+          if (query.length) searchResults2.innerHTML = '';
+          const matches = majors.filter(item =>
+            item.toLowerCase().includes(query)
+          );
+          displayResults(matches, searchResults2, searchInput2);
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!event.target.closest('#search-container')) {
+            searchResults.innerHTML = '';
+          }
+          if (!event.target.closest('#search-container2')) {
+            searchResults2.innerHTML = '';
+          }
+        });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+  </script>
+</body>
+</html>

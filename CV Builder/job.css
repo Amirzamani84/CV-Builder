@@ -1,0 +1,190 @@
+
+#seniority-level{
+  width: 250px;
+}
+#job-t{
+  width: 250px;
+}
+#company{
+  width: 250px;
+}
+#employment-type{
+  width: 250px;
+  margin-right: 22px;
+  
+}
+
+.field-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; 
+}
+.date{
+  display: flex;
+}
+
+#start-month{
+width: 25%;
+padding: 10px 15px; 
+border-radius: 4px;
+margin-left: -2.7%;
+margin-right: 4%;
+font-size: 1em; 
+transition: all 0.3s;
+}
+
+#end-month{
+  width: 25%;
+  padding: 10px 15px; 
+  border-radius: 4px;
+  margin-left: -4.3%;
+  margin-right: 4%;
+  font-size: 1em; 
+  transition: all 0.3s;
+}
+#start{
+width: 25%;
+padding: 10px 15px; 
+border-radius: 4px;
+margin-left: -2.8%;
+margin-right: 5.2%;
+font-size: 1em; 
+transition: all 0.3s;
+}
+
+#end{
+  width: 25%;
+  padding: 10px 15px; 
+  border-radius: 4px;
+  margin-left: -2.8%;
+  font-size: 1em; 
+  transition: all 0.3s;
+}
+
+.month label{
+white-space: nowrap;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #555;
+  margin-left: -5px;
+}
+
+
+
+
+#job-title, #company-name {
+  display: inline-block;
+  width: calc(50% - 10px); 
+  margin-right: 20px; 
+}
+
+ 
+.toggleSwitch-label {
+  font-size: 15px;
+  margin-bottom: 0px; 
+  margin-left: 40px;
+  margin-top: -5px;
+  margin-right: 0%; 
+  vertical-align: middle; 
+}
+.toggle-con{
+  text-align: right;
+  margin-top: 10px;
+}
+.switch {
+  margin-left: 5px; 
+}
+
+#year-text {
+  margin-top: 8%;
+  transition: all 0.3s;
+  width: 50%;
+  padding: 10px 15px;
+  margin-left: -3.8%;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  margin-left: 1%;
+  margin-right: 10%;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2%;
+  bottom: 3%;
+  background-color: rgb(255, 255, 255);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(80%);
+}
+
+#search-container, #search-container2, 
+#university-con, #degree {
+  position: relative;
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+#search-input2:focus + #search-results2 {
+  border: 1px solid #ccc;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+.d-grid{
+  
+  display: grid;
+}
+
+.d-none {
+  display: none;
+}
+.no-visible{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#job-page .input-text,
+#job-page .input-select,
+#job-page .input-textarea{
+    border: 1px solid rgb(255,150,189);
+    box-shadow: 0 0 20px 1px rgba(255, 150, 189, 0.619);
+}

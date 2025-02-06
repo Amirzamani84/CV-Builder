@@ -1,0 +1,249 @@
+
+  #job-title, #company-name {
+  display: inline-block;
+  width: calc(50% - 10px); 
+  margin-right: 20px; 
+}
+
+#start-year, #end-year {
+  width: 90px;
+  margin-right: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#end-year {
+  margin-right: 39.49px;
+}
+
+#end select,
+#start select {
+  width: 90px; 
+  padding: 10px; 
+  height: 40px;
+}
+
+label[for="toggleSwitch"] {
+  font-size: 19px;
+  margin-bottom: 0px; 
+  margin-left: 40px;
+  margin-top: -5px;
+  margin-right: -1px; 
+  vertical-align: middle; 
+}
+
+.switch {
+  margin-left: 5px; 
+}
+
+#year-text2 {
+  margin-left: 20px;
+  margin-right: 30px; 
+  margin-bottom: 0px; 
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+#search-container, #search-container2, 
+#university-con, #degree {
+  position: relative;
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+.search-results {
+  position: absolute;
+  width: 300px;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  z-index: 1000;
+}
+
+.search-results div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-results div:hover {
+  background: #f0f0f0;
+}
+
+#search-input:focus + #search-results {
+  border: 1px solid #ccc;
+}
+
+#search-input2:focus + #search-results2 {
+  border: 1px solid #ccc;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-none {
+  display: none;
+}
+
+#search-results, #search-results2 {
+  position: absolute;
+  width: 300px;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  z-index: 1000;
+}
+
+#search-results div, #search-results2 div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#search-results div:hover, #search-results2 div:hover {
+  background: #f0f0f0;
+}
+
+#search-input:focus + #search-results{
+  border: 1px solid #ccc;
+}
+#search-input2:focus + #search-results2{
+  border: 1px solid #ccc;
+}
+
+#search-container, #search-container2, 
+#university-con, #degree {
+  position: relative;
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+.year {
+  position: relative;
+  display: inline-block;
+}
+
+input[type="text"], select{
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 22px;
+  margin-left: 5px;
+  margin-top: 2px;
+  vertical-align: middle;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 19px;
+  width: 19px;
+  left: 0.6px;
+  bottom: 1.5px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14.5px);
+}
+
+.toggle-label {
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.d-none {
+  display: none;
+}
+
+
+#education-page .input-text,
+#education-page .input-select,
+#education-page .input-textarea{
+    border: 1px solid rgb(153,153,251);
+    box-shadow: 0 0 20px 1px rgba(153,153,251, 0.619);
+}

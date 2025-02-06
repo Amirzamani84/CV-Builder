@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload with Skills</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .upload-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .file-input, .skills-input {
+            margin-bottom: 10px;
+        }
+        .file-input label, .skills-input label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .file-name-display {
+            font-size: 14px;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: none;
+        }
+        .file-input input[type="file"], .file-input input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .file-input input[type="text"] {
+            width: 50%;
+            margin-bottom: 5px;
+        }
+        .skills-input {
+            position: relative;
+            margin-top: 20px;
+        }
+        .skills-input input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        #skill-level{
+            width: 30%;
+            height: 35.2px;
+        }
+        .skills-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 150px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .skills-dropdown div {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .skills-dropdown div:hover {
+            background: #007bff;
+            color: #fff;
+        }
+        .skills-list {
+            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+        }
+        .skills-list li {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .skills-list li span {
+            flex: 1;
+        }
+        .skills-list li button {
+            background: #dc3545;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .skills-list li button:hover {
+            background: #c82333;
+        }
+        .add-file-btn, .add-skill-btn, .submit-btn {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .add-file-btn:hover, .add-skill-btn:hover, .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .submit-btn {
+            background-color: #28a745;
+        }
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <form id="uploadForm">
+           <h2>Licenses & Certifications</h2>
+            <div class="file-input">
+                <label for="fileName1">File Name</label>
+                <input type="text" name="fileName1" id="fileName1" placeholder="Name" oninput="updateFileName(1)" autocomplete="off">
+                <label for="file1">Upload File</label>
+                <div class="file-name-display" id="fileDisplay1"></div>
+                <input type="file" name="file1" id="file1" onchange="updateFileName(1)">
+                <div id="fileError" class="error" style="display: none;">Please fill out this field.</div>
+                <div id="addFileError" class="error" style="display: none;">Please upload a file before adding another.</div>
+            </div>
+            <div id="additionalInputs"></div>
+            <button type="button" class="add-file-btn" onclick="validateAndAddFileInput()">Add Another File</button>
+
+            <div class="skills-input">
+                <label for="skillSearch">Skill</label>
+                <input type="text" id="skillSearch" placeholder="Type to search..." onfocus="showDropdown()" oninput="filterSkills()" autocomplete="off">
+                <div id="skillsDropdown" class="skills-dropdown"></div>
+                <ul id="skillsList" class="skills-list"></ul>
+                <label for="skill-level">Skill Level</label>
+                <select name="skill-level" id="skill-level">
+                    <option value="default">Skill Level</option>
+                    <option value="basic">Basic</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="expert">Expert</option>
+                </select>
+                <div id="skillError" class="error" style="display: none;">Please select a skill and skill level!</div>
+                <button type="button" class="add-skill-btn" onclick="addSkill()">Add Skill</button>
+            </div>
+
+            <button type="button" class="submit-btn" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        let fileInputCount = 1;
+        let skills = [];
+
+        fetch('skills.json')
+            .then(response => response.json())
+            .then(data => {
+                skills = data.skills;
+            })
+            .catch(error => console.error('Error loading skills:', error));
+
+        function validateAndAddFileInput() {
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            const addFileError = document.getElementById('addFileError');
+            const hasFile = Array.from(fileInputs).some(input => input.files.length > 0);
+
+            if (!hasFile) {
+                addFileError.style.display = 'block';
+            } else {
+                addFileError.style.display = 'none';
+                addFileInput();
+            }
+        }
+
+        function addFileInput() {
+            fileInputCount++;
+            const newInputDiv = document.createElement('div');
+            newInputDiv.className = 'file-input';
+            newInputDiv.innerHTML = ` 
+                <label for="fileName${fileInputCount}">File Name:</label>
+                <input type="text" name="fileName${fileInputCount}" id="fileName${fileInputCount}" placeholder="Name" oninput="updateFileName(${fileInputCount})">
+                <label for="file${fileInputCount}">Upload File:</label>
+                <div class="file-name-display" id="fileDisplay${fileInputCount}"></div>
+                <input type="file" name="file${fileInputCount}" id="file${fileInputCount}" onchange="updateFileName(${fileInputCount})">
+            `;
+            document.getElementById('additionalInputs').appendChild(newInputDiv);
+        }
+
+        function updateFileName(index) {
+            const fileName = document.getElementById(`fileName${index}`).value.trim();
+            const fileInput = document.getElementById(`file${index}`);
+            const fileDisplay = document.getElementById(`fileDisplay${index}`);
+
+            if (fileInput.files.length > 0) {
+                fileDisplay.style.display = 'block';
+                fileDisplay.textContent = fileName ? `File Name: ${fileName}` : `File Uploaded: ${fileInput.files[0].name}`;
+            } else {
+                fileDisplay.style.display = 'none';
+            }
+        }
+
+        function showDropdown() {
+            skillsDropdown.style.display = 'block';
+        }
+
+        function filterSkills() {
+            const query = skillSearch.value.toLowerCase();
+            const filtered = skills.filter(skill => skill.toLowerCase().includes(query));
+            populateDropdown(filtered);
+        }
+
+        function populateDropdown(filteredSkills) {
+            skillsDropdown.innerHTML = '';
+            filteredSkills.forEach(skill => {
+                const div = document.createElement('div');
+                div.textContent = skill;
+                div.onclick = () => {
+                    selectSkill(skill);
+                };
+                skillsDropdown.appendChild(div);
+            });
+            skillsDropdown.style.display = 'block';
+        }
+
+        function selectSkill(skill) {
+            skillSearch.value = skill;
+            skillsDropdown.style.display = 'none';
+        }
+
+        function addSkill() {
+            const skill = skillSearch.value.trim();
+            const skillLevel = document.getElementById('skill-level').value;
+            const skillError = document.getElementById('skillError');
+
+            if (!skill || skillLevel === 'default') {
+                skillError.style.display = 'block';
+                return;
+            } else {
+                skillError.style.display = 'none';
+            }
+
+            if ([...skillsList.children].some(li => li.dataset.skill === skill)) return;
+
+            const li = document.createElement('li');
+            li.dataset.skill = skill;
+            li.innerHTML = `
+                <span>${skill} - <strong>${skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1)}</strong></span>
+                <button type="button" onclick="removeSkill(this)">Remove</button>
+            `;
+            skillsList.appendChild(li);
+            skillSearch.value = '';
+            document.getElementById('skill-level').value = 'default'; 
+        }
+
+        function removeSkill(button) {
+            const li = button.parentElement;
+            skillsList.removeChild(li);
+        }
+
+        function submitForm() {
+            const fileName = document.getElementById('fileName1').value.trim();
+            const fileInput = document.getElementById('file1').files.length;
+            const fileError = document.getElementById('fileError');
+            let hasError = false;
+
+            if (!fileName || !fileInput) {
+                fileError.style.display = 'block';
+                hasError = true;
+            } else {
+                fileError.style.display = 'none';
+            }
+
+            if (hasError) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            alert('Form submitted successfully!');
+        }
+
+        document.addEventListener('click', (event) => {
+            const isClickInside = document.querySelector('.skills-input').contains(event.target);
+            if (!isClickInside) {
+                document.getElementById('skillsDropdown').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

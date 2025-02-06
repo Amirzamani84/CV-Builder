@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Work Experiences</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="job.css" />
+  </head>
+  <body>
+    <fieldset>
+      <h2>Work Experiences</h2>
+
+      <div class="field-container">
+        <div id="job-title" class="search-container">
+          <label for="job-t">Job Title</label>
+          <input
+            type="text"
+            name="job-t"
+            id="job-t"
+            placeholder="Search by name"
+            autocomplete="off"
+          />
+          <div id="suggestions"></div>
+        </div>
+
+        <div id="company-name">
+          <label for="company">Company Name</label>
+          <input
+            type="text"
+            name="company"
+            id="company"
+            placeholder="Enter your company name"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="field-container">
+        <div class="field">
+          <label for="seniority-level">Seniority Level</label>
+          <select id="seniority-level">
+            <option value="default">Seniority Level</option>
+            <option value="Top management">Top Management / Director</option>
+            <option value="manager">Manager</option>
+            <option value="senior">Senior</option>
+            <option value="junior">Junior</option>
+            <option value="intern">Intern</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="employment-type">Employment Type</label>
+          <select id="employment-type">
+            <option value="default">Employment Type</option>
+            <option value="full">Full Time</option>
+            <option value="part">Part Time</option>
+            <option value="freelance">Freelance</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="date">
+        <div id="start-month" class="month">
+          <label for="months">Start Month</label>
+          <select name="months" id="months">
+            <option value="default">Month</option>
+            <option value="january">January</option>
+            <option value="february">February</option>
+            <option value="march">March</option>
+            <option value="april">April</option>
+            <option value="may">May</option>
+            <option value="june">June</option>
+            <option value="july">July</option>
+            <option value="august">August</option>
+            <option value="september">September</option>
+            <option value="october">October</option>
+            <option value="november">November</option>
+            <option value="december">December</option>
+          </select>
+        </div>
+
+        <div id="start" class="month">
+          <label for="start-year">Start Year</label>
+          <br />
+          <select name="start-year" id="start-year"></select>
+        </div>
+        <div id="end-month" class="month">
+          <label for="months">End Month</label>
+          <select name="months" id="end-month-select">
+            <option value="default">Month</option>
+            <option value="january">January</option>
+            <option value="february">February</option>
+            <option value="march">March</option>
+            <option value="april">April</option>
+            <option value="may">May</option>
+            <option value="june">June</option>
+            <option value="july">July</option>
+            <option value="august">August</option>
+            <option value="september">September</option>
+            <option value="october">October</option>
+            <option value="november">November</option>
+            <option value="december">December</option>
+          </select>
+        </div>
+
+        <div id="end" class="month">
+          <label for="end-year">End Year</label>
+          <br />
+          <select name="end-year" id="end-year"></select>
+        </div>
+        <p id="year-text" class="d-grid d-none no-visible">Till Present</p>
+      </div>
+
+      <div class="toggle-con">
+        <label for="toggleSwitch">I currently work here</label>
+        <label class="switch">
+          <input type="checkbox" id="toggleSwitch" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <br />
+
+      <label for="description">Description (optional)</label>
+      <br />
+      <textarea
+        id="description"
+        rows="5"
+        cols="55"
+        placeholder="Write here..."
+      ></textarea>
+    </fieldset>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const jobInput = document.getElementById("job-t");
+        const suggestionsContainer = document.getElementById("suggestions");
+        let jobs = [];
+
+        fetch("job.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error in uploading json file");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            jobs = data;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        function showSuggestions(filteredJobs) {
+          suggestionsContainer.innerHTML = "";
+
+          if (filteredJobs.length === 0) {
+            const noResult = document.createElement("div");
+            noResult.textContent = "No job found!";
+            noResult.style.color = "red";
+            suggestionsContainer.appendChild(noResult);
+            return;
+          }
+
+          filteredJobs.forEach((job) => {
+            const suggestion = document.createElement("div");
+            suggestion.textContent = job;
+            suggestion.style.cursor = "pointer";
+            suggestion.addEventListener("click", () => {
+              jobInput.value = job;
+              suggestionsContainer.innerHTML = "";
+            });
+            suggestionsContainer.appendChild(suggestion);
+          });
+        }
+
+        jobInput.addEventListener("input", () => {
+          const query = jobInput.value.trim().toLowerCase();
+          if (query === "") {
+            suggestionsContainer.innerHTML = "";
+            return;
+          }
+
+          const filteredJobs = jobs.filter((job) =>
+            job.toLowerCase().includes(query)
+          );
+          showSuggestions(filteredJobs);
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest("#suggestions") && e.target !== jobInput) {
+            suggestionsContainer.innerHTML = "";
+          }
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("start.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error in uploading start.json");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const startYearSelect = document.getElementById("start-year");
+            const endYearSelect = document.getElementById("end-year");
+
+            data.forEach((year) => {
+              const startOption = document.createElement("option");
+              startOption.value = year;
+              startOption.textContent = year;
+              startYearSelect.appendChild(startOption);
+
+              const endOption = document.createElement("option");
+              endOption.value = year;
+              endOption.textContent = year;
+              endYearSelect.appendChild(endOption);
+            });
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        const toggleSwitch = document.getElementById("toggleSwitch");
+        const endMonth = document.getElementById("end-month");
+        const endYear = document.getElementById("end");
+        const yearText = document.getElementById("year-text");
+        const endMonthSelect = document.getElementById("end-month-select");
+        const endYearSelect = document.getElementById("end-year");
+
+        toggleSwitch.addEventListener("change", () => {
+          if (toggleSwitch.checked) {
+            endMonth.classList.add("no-visible");
+            endYear.classList.add("no-visible");
+            setTimeout(() => {
+              endMonth.classList.add("d-none");
+              endYear.classList.add("d-none");
+              yearText.classList.remove("d-none");
+              yearText.classList.remove("no-visible");
+            }, 300);
+          } else {
+              yearText.classList.add("no-visible");
+              setTimeout(()=>{
+                  yearText.classList.add("d-none");
+                  endMonth.classList.remove("d-none");
+                  endYear.classList.remove("d-none");
+                  endMonth.classList.remove("no-visible");
+                  endYear.classList.remove("no-visible");
+                  
+              } , 300)
+            setTimeout(() => {
+            }, 300);
+          }
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const jobInput = document.getElementById("job-t");
+        const suggestionsContainer = document.getElementById("suggestions");
+        let jobs = [];
+
+        fetch("job.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Error in loading job data");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            jobs = data; 
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        function showSuggestions(filteredJobs) {
+          suggestionsContainer.innerHTML = ""; 
+
+          if (filteredJobs.length === 0) {
+            const noResult = document.createElement("div");
+            noResult.textContent = "No job found!";
+            noResult.style.color = "red";
+            suggestionsContainer.appendChild(noResult);
+            suggestionsContainer.style.display = "block";
+            return;
+          }
+
+          filteredJobs.forEach((job) => {
+            const suggestion = document.createElement("div");
+            suggestion.textContent = job;
+            suggestion.addEventListener("click", () => {
+              jobInput.value = job;
+              suggestionsContainer.innerHTML = "";
+              suggestionsContainer.style.display = "none"; 
+            });
+            suggestionsContainer.appendChild(suggestion);
+          });
+
+          suggestionsContainer.style.display = "block"; 
+        }
+
+        jobInput.addEventListener("input", () => {
+          const query = jobInput.value.trim().toLowerCase();
+          if (query === "") {
+            suggestionsContainer.innerHTML = "";
+            suggestionsContainer.style.display = "none";
+            return;
+          }
+
+          const filteredJobs = jobs.filter((job) =>
+            job.toLowerCase().includes(query)
+          );
+          showSuggestions(filteredJobs);
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest("#job-title") && e.target !== jobInput) {
+            suggestionsContainer.innerHTML = "";
+            suggestionsContainer.style.display = "none"; 
+          }
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("fieldset"); 
+        const inputs = form.querySelectorAll("input, textarea, select"); 
+
+        inputs.forEach((input, index) => {
+          input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault(); 
+              const nextInput = inputs[index + 1]; 
+              if (nextInput) {
+                nextInput.focus(); 
+              }
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

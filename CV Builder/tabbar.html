@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="job.css" rel="stylesheet" />
+    <link href="education.css" rel="stylesheet" />
+    <link href="certificate.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="pages-container">
+      <div id="project-page">
+        <form class="fieldset">
+          <h2 class="h2-title">Personal Information</h2>
+          <div class="Personal"></div>
+          
+          <label for="firstname" class="label">First Name</label>
+          
+          <input
+            class="input-custom input-text"
+            id="firstname"
+            name="firs-name"
+            placeholder="required"
+            required=""
+            type="text"
+            autocomplete="off"
+          />
+          
+          <label for="lastname" class="label">Last Name</label>
+          
+          <input
+            class="input-custom input-text"
+            id="lastname"
+            name="last-name"
+            placeholder="required"
+            required=""
+            type="text"
+            autocomplete="off"
+          />
+          
+          <div class="gender-con">
+            <label class="label">Gender</label>
+            
+            <input id="male" name="gender" required="" type="radio" class="input-radio" />
+            <label for="male" class="gender-label">Male</label>
+            <input id="female" name="gender" required="" type="radio" class="input-radio" />
+            <label for="female" class="gender-label">Female</label>
+          </div>
+
+          <div class="gender-con">
+            <label class="label">Marital Status</label>
+            
+            <input id="single" name="marital" required="" type="radio" class="input-radio" />
+            <label for="single" class="marital-label">Single</label>
+            <input id="married" name="marital" required="" type="radio" class="input-radio" />
+            <label for="married" class="marital-label">Married</label>
+          </div>
+          
+          <label for="birthdate" class="label">Date of Birth</label>
+          
+          <input id="birthdate" required="" type="date" class="input-custom input-text input-date" />
+          
+          <label for="military" class="label">Military Service Status</label>
+          <select id="military" name="military" class="input-select">
+            <option value="default">Military Service Status</option>
+            <option value="Still to do">Still to do</option>
+            <option value="completed">Completed</option>
+            <option value="exempt">Exempt</option>
+          </select>
+          
+          <label for="phone" class="label">Phone Number</label>
+          
+          <div class="phone-container" id="phone-number-section"></div>
+          <label for="email" class="label">E-mail</label>
+          
+          <input
+            class="input-custom input-text input-email"
+            id="email"
+            name="email"
+            placeholder="sample@example.com"
+            type="email"
+            autocomplete="off"
+          />
+          
+          <label for="country" class="label">Country</label>
+          
+          <input
+            class="input-custom input-text input-country"
+            id="country"
+            list="countries"
+            name="country"
+            placeholder="Country"
+            required=""
+            autocomplete="off"
+          />
+          <datalist id="countries"></datalist>
+          
+          <div id="province-section" class="section-province">
+            <label for="province" class="label">Province</label>
+            
+            <input
+              disabled=""
+              id="province"
+              list="provinces"
+              name="province"
+              placeholder="Province"
+              class="input-text"
+              required=""
+              autocomplete="off"
+            />
+            <datalist id="provinces"></datalist>
+          </div>
+          <div id="city-section" class="section-city">
+            <label for="city" class="label">City</label>
+            
+            <input
+              id="city"
+              list="cities"
+              name="city"
+              placeholder="City"
+              class="input-custom input-text"
+              required=""
+              autocomplete="off"
+            />
+            <datalist id="cities"></datalist>
+          </div>
+          <label for="address" class="label">Address</label>
+          
+          <textarea
+            cols="40"
+            id="address"
+            name="address"
+            placeholder="e.g. 1234 Elm Street, Apt. 5B, Springfield, IL"
+            rows="5"
+            class="input-textarea"
+          ></textarea>
+          
+          <div class="button-container">
+            <button type="reset" class="button">Reset</button>
+            <button type="submit" class="button" id="submit-button">Submit</button>
+          </div>
+      </form>
+      
+      </div>
+
+      
+      
+      <div id="job-page" class="d-none">
+        <fieldset class="fieldset">
+          <h2>Work Experiences</h2>
+          <div class="field-container">
+            <div class="search-container" id="job-title">
+              <label for="job-t" class="label">Job Title</label>
+              <input
+                autocomplete="off"
+                id="job-t"
+                name="job-t"
+                placeholder="Search by name"
+                type="text"
+                class="input-custom input-text"
+              />
+              <div id="suggestions" class="search-results"></div>
+            </div>
+            <div id="company-name">
+              <label for="company"class="label">Company Name</label>
+              <input
+                autocomplete="off"
+                id="company"
+                name="company"
+                placeholder="Enter your company name"
+                type="text"
+                class="input-custom input-text"
+              />
+            </div>
+          </div>
+          <div class="field-container">
+            <div class="field">
+              <label for="seniority-level" class="label">Seniority Level</label>
+              <select id="seniority-level" class="input-select">
+                <option value="default">Seniority Level</option>
+                <option value="Top management">
+                  Top Management / Director
+                </option>
+                <option value="manager">Manager</option>
+                <option value="senior">Senior</option>
+                <option value="junior">Junior</option>
+                <option value="intern">Intern</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="employment-type" class="label">Employment Type</label>
+              <select id="employment-type" class="input-select">
+                <option value="default">Employment Type</option>
+                <option value="full">Full Time</option>
+                <option value="part">Part Time</option>
+                <option value="freelance">Freelance</option>
+              </select>
+            </div>
+          </div>
+          <div class="date">
+            <div class="month" id="start-month">
+              <label for="months" class="label">Start Month</label>
+              <select id="months" name="months" class="input-select">
+                <option value="default">Month</option>
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+              </select>
+            </div>
+            <div class="month" id="start">
+              <label for="start-year" class="label">Start Year</label>
+              
+              <select id="start-year" name="start-year" class="input-select"></select>
+            </div>
+            <div class="month" id="end-month">
+              <label for="months" class="label">End Month</label>
+              <select id="end-month-select" name="months" class="input-select">
+                <option value="default">Month</option>
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="april">April</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+              </select>
+            </div>
+            <div class="month" id="end">
+              <label for="end-year" class="label">End Year</label>
+              
+              <select id="end-year" name="end-year" class="input-select"></select>
+            </div>
+            <p class="d-grid d-none no-visible" id="year-text">Till Present</p>
+          </div>
+          <div class="toggle-con">
+            <label for="toggleSwitch" class="toggleSwitch-label">I currently work here</label>
+            <label class="switch">
+              <input id="toggleSwitch" type="checkbox" />
+              <span class="slider"></span>
+            </label>
+          </div>  
+          
+          <label for="description" class="label">Description (optional)</label>
+          
+          <textarea
+            cols="55"
+            id="description"
+            placeholder="Write here..."
+            rows="5"
+            class="input-textarea"
+          ></textarea>
+        </fieldset>
+      </div>
+      <div id="education-page" class="d-none">
+        <fieldset class="fieldset">
+          <h2>Educations</h2>
+          <div id="search-container">
+            <label for="university" class="label">School/University</label>
+            <input
+              id="search-input"
+              placeholder="Search by name or domain"
+              type="text"
+              autocomplete="off"
+              class="input-custom input-text"
+            />
+            <div id="search-results" class="search-results"></div>
+          </div>
+          <div id="university-con">
+            <label for="university-type" class="label">University Type</label>
+            
+            <select id="university-type" name="university-type"  class="input-select">
+              <option value="default">University Type</option>
+              <option value="governmental">Governmental</option>
+              <option value="private">Private</option>
+              <option value="azad">Azad</option>
+              <option value="pnu">PNU</option>
+              <option value="elmi karbordi">Elmi Karbordi</option>
+              <option value="fani herfei">Fani Herfei</option>
+              <option value="pardis-international">Pardis International</option>
+              <option value="non-iranian">Non-Iranian</option>
+              <option value="other">Other</option>
+              <option value=""></option>
+            </select>
+          </div>
+          <div id="search-container2">
+            <label for="majors" class="label">Major</label>
+            <input
+              id="search-input2"
+              placeholder="Search by name"
+              type="text"
+              autocomplete="off"
+              class="input-custom input-text"
+            />
+            <div id="search-results2" class="search-results"></div>
+          </div>
+          <div id="degree">
+            <label for="degree-level" class="label">Degree Level</label>
+            <select id="degree-level" name="degree-level" class="input-select">
+              <option value="default">Degree Level</option>
+              <option value="phd">PhD</option>
+              <option value="md">MD</option>
+              <option value="master">Master (MSc/MA)</option>
+              <option value="bachelor">Bachelor (BSc/BA)</option>
+              <option value="associate">Associate</option>
+              <option value="diploma">Diploma</option>
+              <option value="below-diploma">Below Diploma</option>
+            </select>
+          </div>
+          <div class="year" id="start2">
+            <label for="start-year2" class="label">Start Year</label>
+            
+            <select id="start-year2" name="start-year" class="input-select"></select>
+          </div>
+          <div class="year" id="end2">
+            <label for="end-year2" class="label">End Year</label>
+            
+            <select id="end-year2" name="end-year" class="input-select"></select>
+          </div>
+          <p class="d-inline-block d-none" id="year-text2">Till Present</p>
+          <label for="toggleSwitch2" class="toggleSwitch-label">I currently study here</label>
+          <label class="switch">
+            <input id="toggleSwitch2" type="checkbox" />
+            <span class="slider"></span>
+          </label>
+          
+          <label for="description" class="label">Description (optional)</label>
+          
+          <textarea
+            cols="55"
+            id="description"
+            placeholder="Write here..."
+            rows="5"
+            autocomplete="off"
+            class="input-textarea"
+          ></textarea>
+        </fieldset>
+      </div>
+      <div id="certificate-page" class="d-none">
+        <div class="upload-container fieldset">
+          <form id="uploadForm">
+            <h2>Licenses &amp; Certifications</h2>
+            <div class="file-input">
+              <label for="fileName1" class="label">File Name</label>
+              <input
+                autocomplete="off"
+                id="fileName1"
+                name="fileName1"
+                oninput="updateFileName(1)"
+                placeholder="Name"
+                type="text"
+                class="input-text input-custom"
+              />
+              <label for="file1" class="label">Upload File</label>
+              <div class="file-name-display" id="fileDisplay1"></div>
+              <input
+                id="file1"
+                name="file1"
+                onchange="updateFileName(1)"
+                type="file"
+                class="input-custom input-text"
+              />
+              <div class="error" id="fileError" style="display: none">
+                Please fill out this field.
+              </div>
+              <div class="error" id="addFileError" style="display: none">
+                Please upload a file before adding another.
+              </div>
+            </div>
+            <div id="additionalInputs"></div>
+            <button
+              class="add-file-btn"
+              onclick="validateAndAddFileInput()"
+              type="button"
+            >
+              Add Another File
+            </button>
+            <div class="skills-input">
+              <label for="skillSearch" class="label">Skill</label>
+              <input
+                autocomplete="off"
+                id="skillSearch"
+                onfocus="showDropdown()"
+                oninput="filterSkills()"
+                placeholder="Type to search..."
+                type="text"
+                class="input-custom input-text"
+              />
+              <div class="skills-dropdown" id="skillsDropdown"></div>
+              <ul class="skills-list" id="skillsList"></ul>
+              <label for="skill-level" class="label">Skill Level</label>
+              <select id="skill-level" name="skill-level" class="input-select">
+                <option value="default">Skill Level</option>
+                <option value="basic">Basic</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+                <option value="expert">Expert</option>
+              </select>
+              <div class="error" id="skillError" style="display: none">
+                Please select a skill and skill level!
+              </div>
+              <button class="add-skill-btn" onclick="addSkill()" type="button">
+                Add Skill
+              </button>
+            </div>
+            <button class="submit-btn" onclick="submitForm()" type="button">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+      <div id="submit-page" class="d-none">
+        <div id="pdf-templates-page" class="d-none">
+          <fieldset class="fieldset">
+            <h2>Download Resume Templates</h2>
+            <div class="template-container">
+              <button class="template-btn" onclick="downloadTemplate('template1.pdf')">
+                Template 1
+              </button>
+              <button class="template-btn" onclick="downloadTemplate('template2.pdf')">
+                Template 2
+              </button>
+              <button class="template-btn" onclick="downloadTemplate('template3.pdf')">
+                Template 3
+              </button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="menu-container">
+      <menu class="menu">
+        <button class="menu__item active" style="--bgColorItem: #ff8c00">
+          <img src="icons/personal-information-interface-symbol-svgrepo-com.svg" class="icon" alt="">
+        </button>
+
+        <button class="menu__item" style="--bgColorItem: #f54888">
+          <img src="icons/work-experience-2.svg" class="icon" alt="">
+        </button>
+
+        <button class="menu__item" style="--bgColorItem: #4343f5">
+          <img src="icons/education-cap-svgrepo-com.svg" class="icon" alt="">
+          
+        </button>
+
+        <button class="menu__item" style="--bgColorItem: #e0b115">
+          <img src="icons/professional-skills-icon.svg" class="icon" alt="">
+        </button>
+
+        <button  class="menu__item" onclick="showPage('pdf-templates-page')" style="--bgColorItem: #65ddb7">
+          <img src="icons/File pdf.svg" class="icon" alt="">
+        </button>
+
+        <div class="menu__border"></div>
+      </menu>
+    </div>
+
+    <div class="svg-container">
+      <svg viewBox="0 0 202.9 45.5">
+        <clipPath
+          id="menu"
+          clipPathUnits="objectBoundingBox"
+          transform="scale(0.0049285362247413 0.021978021978022)"
+        >
+          <path
+            d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7
+              c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5
+              c9.2,3.6,17.6,4.2,23.3,4H6.7z"
+          />
+        </clipPath>
+      </svg>
+    </div>
+
+    <script src="tab.js"></script>
+    <script src="job.js"></script>
+    <script src="certificate.js"></script>
+    <script src="education.js"></script>
+    <script src="pdf.js"></script>
+  </body>
+</html>
